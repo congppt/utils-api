@@ -1,0 +1,8 @@
+fastapi[standard]
+uvicorn
+sqlalchemy[asyncio]
+aiosqlite
+alembic
+redis
+httpx
+beautifulsoup4
