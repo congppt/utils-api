@@ -16,3 +16,4 @@ class Organization(Base):
     license_issuer: Mapped[str]
     rep_name: Mapped[str]
     rep_address: Mapped[str]
+    source: Mapped[str]
