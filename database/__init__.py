@@ -3,10 +3,10 @@ import os
 from database.manager import DatabaseSessionManager
 from database.models.organization import *
 
-__DB_URL = os.getenv("DB_URL", "sqlite+aiosqlite:///utildb")
+_DB_URL = os.getenv("DB_URL", "sqlite+aiosqlite:///utildb")
 
 DATABASE = DatabaseSessionManager(
-    url=__DB_URL,
+    url=_DB_URL,
     pool_size=5,
     max_overflow=10,  # max_overflow + pool_size = max size = 15
     pool_timeout=30,

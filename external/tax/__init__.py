@@ -7,4 +7,4 @@ class TaxService(ABC):
     @classmethod
     @abstractmethod
     async def find_organization(cls, tax_code: str) -> BaseOrganization | None:
-        pass
+        return None

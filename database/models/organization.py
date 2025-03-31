@@ -2,10 +2,10 @@ from datetime import datetime
 from typing import Optional
 from sqlalchemy.orm import Mapped, mapped_column
 
-from database.models import Base
+from database.models import Entity
 
 
-class Organization(Base):
+class Organization(Entity):
     __tablename__ = "organizations"
     tax_code: Mapped[str] = mapped_column(primary_key=True)
     name: Mapped[str]
