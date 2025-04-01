@@ -1,5 +1,5 @@
-from external.tax.schema import BaseOrganization
+from external.tax.schema import ExternalTaxPayer
 
 
-class MSTOrganization(BaseOrganization):
+class MSTTaxPayer(ExternalTaxPayer):
     pass

@@ -1,2 +1,2 @@
-class OrganizationNotFoundException(Exception):
+class TaxPayerNotFoundError(Exception):
     pass

@@ -1,7 +1,7 @@
 import os
 
 from database.manager import DatabaseSessionManager
-from database.models.organization import *
+from database.models.tax_payer import *
 
 _DB_URL = os.getenv("DB_URL", "sqlite+aiosqlite:///utildb")
 
