@@ -5,4 +5,4 @@ aiosqlite
 alembic
 redis
 httpx
-beautifulsoup4
+parsel

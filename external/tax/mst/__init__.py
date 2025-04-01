@@ -1,7 +1,8 @@
 from typing import Annotated
 import httpx
 from pydantic import BaseModel, Field
-from cache import aget_cache
+from parsel import Selector
+
 from external.tax import TaxService
 from external.tax.mst.schema import MSTTaxPayer
 
@@ -14,14 +15,29 @@ class MSTTaxService(httpx.AsyncClient, TaxService):
         token: Annotated[str, Field(...)]
 
     @classmethod
-    async def get_tax_payer(cls, tax_code: str) -> MSTTaxPayer | None:
+    async def get_tax_payer(cls, tax_identifier: str) -> MSTTaxPayer | None:
         client = cls.__create_base()
-        url = await client.__get_tax_payer_url(tax_code)
+        url = await client.__get_tax_payer_url(tax_identifier)
         if not url:
             return None
         res = await client.get(url)
-        print('Here')
-        return None
+        if res.status_code != 200:
+            raise Exception(f"{[client.BASE_URL]}: {res.status_code} Cannot access")
+        dom = Selector(body=res.content)
+        tables = dom.css('table.table-taxinfo')
+        if not tables:
+            raise Exception(f"{[client.BASE_URL]}: Cannot find data block")
+        table = tables[0]
+        data = {
+            "tax_code":table.css('td[itemprop="taxID"] span::text').get(),
+            "issue_date":table.css('td:contains("Ngày hoạt động") + td span::text').get(),
+            "name":table.css('thead th[itemprop="name"] span::text').get(),
+            "address":table.css('td[itemprop="address"] span::text').get(),
+            "rep_name":table.css('tr[itemprop="alumni"] td span[itemprop="name"] a::text').get(),
+            "phone":table.css('td[itemprop="telephone"] span::text').get(),
+            "source":client.BASE_URL
+        }
+        return MSTTaxPayer.model_validate(data)
 
     @classmethod
     def __create_base(cls):
@@ -49,10 +65,10 @@ class MSTTaxService(httpx.AsyncClient, TaxService):
             return result["token"]
         raise Exception(f"{[self.BASE_URL]}: {res.status_code} Cannot authenticate")
     
-    async def __get_tax_payer_url(self, tax_code: str) -> str | None:
+    async def __get_tax_payer_url(self, tax_identifier: str) -> str | None:
         token = await self.__get_token()
         res = await self.post("/Ajax/Search", data={
-            "q": tax_code,
+            "q": tax_identifier,
             "token": token
         })
         if res.status_code == 200:

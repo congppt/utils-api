@@ -8,9 +8,9 @@ from features.tax.exception import TaxPayerNotFoundError
 
 router = APIRouter(prefix="/tax")
 
-@router.get("/{tax_code}")
-async def find_tax_payer(tax_code: Annotated[str, Path(min_length=10, max_length=14)], db: AsyncSession = Depends(aget_db)):
+@router.get("/{tax_identifier}")
+async def find_tax_payer(tax_identifier: Annotated[str, Path(min_length=10, max_length=14)], db: AsyncSession = Depends(aget_db)):
     try:
-        return await handler.find_tax_payer(tax_code=tax_code, db=db)
+        return await handler.find_tax_payer(tax_identifier=tax_identifier, db=db)
     except TaxPayerNotFoundError:
         raise HTTPException(status_code=404)
