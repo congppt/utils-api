@@ -14,6 +14,7 @@ DATABASE = DatabaseSessionManager(
     pool_pre_ping=True,  # Phát hiện và loại bỏ kết nối chết
 )
 
+
 async def aget_db():
     """Retrieve a database session"""
     async with DATABASE.aget_session() as session:

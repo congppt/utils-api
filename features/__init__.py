@@ -1,5 +1,3 @@
 from features import tax
 
-routers = [
-    tax.router
-]
+routers = [tax.router]

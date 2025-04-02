@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Annotated
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -15,4 +16,4 @@ class TaxPayerResponse(BaseModel):
     rep_address: Annotated[str | None, Field(default=None)]
     source: Annotated[str, Field(...)]
 
-    model_config=ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True)

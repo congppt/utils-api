@@ -1,7 +1,6 @@
-from typing import TypeVar
-from datetime import timedelta
 import json
-from typing import Any
+from datetime import timedelta
+from typing import Any, TypeVar
 
 from pydantic import BaseModel
 from pydantic_core import from_json, to_jsonable_python
@@ -9,9 +8,11 @@ from redis.asyncio import StrictRedis
 
 T = TypeVar("T")
 
+
 class CacheSessionManager:
     def __init__(self, url: str):
         self._redis = StrictRedis.from_url(url)
+
     async def aclose(self):
         """Close all connections including in-use connections."""
         await self._redis.aclose()
