@@ -10,6 +10,7 @@ class TaxPayerResponse(BaseModel):
     name: Annotated[str, Field(...)]
     address: Annotated[str, Field(...)]
     phone: Annotated[str | None, Field(default=None)]
+    id_number: Annotated[str | None, Field(default=None)]
     license: Annotated[str | None, Field(default=None)]
     license_issuer: Annotated[str | None, Field(default=None)]
     rep_name: Annotated[str | None, Field(default=None)]

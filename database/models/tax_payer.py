@@ -13,6 +13,7 @@ class TaxPayer(Entity):
     name: Mapped[str]
     address: Mapped[str]
     phone: Mapped[Optional[str]]
+    id_number: Mapped[Optional[str]] = mapped_column(index=True, unique=True)
     license: Mapped[Optional[str]]
     license_issuer: Mapped[Optional[str]]
     rep_name: Mapped[Optional[str]]

@@ -10,5 +10,6 @@ class ExternalTaxPayer(BaseModel):
     name: Annotated[str, Field(...)]
     address: Annotated[str, Field(...)]
     phone: Annotated[str | None, Field(default=None)]
+    id_number: Annotated[str | None, Field(default=None)]
     rep_name: Annotated[str | None, Field(default=None)]
     source: Annotated[str, Field(...)]
