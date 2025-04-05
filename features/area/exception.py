@@ -1,0 +1,2 @@
+class AreaNotFoundError(Exception):
+    pass

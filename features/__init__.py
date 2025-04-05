@@ -1,3 +1,3 @@
-from features import tax
+from features import area, tax
 
-routers = [tax.router]
+routers = [tax.router, area.router]
