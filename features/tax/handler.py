@@ -17,7 +17,7 @@ async def find_tax_payer(
         return payer  # type: ignore
     # tìm trong db
     if payer_ent := await db.scalar(
-        select(TaxPayer).filter(TaxPayer.tax_code == tax_identifier)
+        select(TaxPayer).filter((TaxPayer.tax_code == tax_identifier) | (TaxPayer.id_number == tax_identifier))
     ):
         payer = TaxPayerResponse.model_validate(payer_ent)
         await aset_cache(key, payer, 60 * 60)

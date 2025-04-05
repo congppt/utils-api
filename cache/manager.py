@@ -1,23 +1,23 @@
 import json
 from datetime import timedelta
-from typing import Any, TypeVar
+from typing import Any, Coroutine, TypeVar
 
 from pydantic import BaseModel
 from pydantic_core import from_json, to_jsonable_python
-from redis.asyncio import StrictRedis
+from redis.asyncio import Redis
 
 T = TypeVar("T")
 
 
 class CacheSessionManager:
     def __init__(self, url: str):
-        self._redis = StrictRedis.from_url(url)
+        self._redis = Redis.from_url(url)
 
     async def aclose(self):
         """Close all connections including in-use connections."""
         await self._redis.aclose()
 
-    async def aget(self, key: str, klass: type[T] | None = None):
+    async def aget(self, key: str, klass: type[T] | None = None) ->  T | Any | None:
         """
         Get object from cache
         :param key: key used to store object
