@@ -21,7 +21,7 @@ def __initialize():
 __AREAS = __initialize()
 
 
-def get_areas(ids: list[int]):
+def get_areas(ids: list[int], minimal: bool):
     area: Area | None = None
     for id in ids:
         try:
@@ -29,4 +29,4 @@ def get_areas(ids: list[int]):
         except IndexError:
             raise AreaNotFoundError()
     areas = area.areas if area else __AREAS
-    return areas
+    return [Area(id=area.id, name=area.name) for area in areas] if minimal else areas

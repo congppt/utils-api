@@ -9,7 +9,7 @@ class ExternalTaxPayer(BaseModel):
     issue_date: Annotated[datetime, Field(...)]
     name: Annotated[str, Field(...)]
     address: Annotated[str, Field(...)]
-    phone: Annotated[str | None, Field(default=None)]
-    id_number: Annotated[str | None, Field(default=None)]
-    rep_name: Annotated[str | None, Field(default=None)]
+    phone: Annotated[str | None, Field()] = None
+    id_number: Annotated[str | None, Field()] = None
+    rep_name: Annotated[str | None, Field()] = None
     source: Annotated[str, Field(...)]
